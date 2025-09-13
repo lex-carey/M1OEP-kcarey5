@@ -1,18 +1,17 @@
 #ifndef GAME_H
 #define GAME_H
 
-using namespace std;
-
 class Game {
 private:
-    int month, year, bombs, time, reason;
+    int month, year, bombs, time;
     bool won;
+    enum class reasons {NOT_TRACKING, LOGIC, MISCLICK, MISCOUNT, CHANCE} reason;
 public:
     /*
      * Default Constructor
      * Requires: Nothing
      * Modifies: month, year, bombs, time, reason, won
-     * Creates a new game where all integer variables are set to 0 and won is set to false.
+     * Creates a new game where all integer variables are set to 0, won is set to false, and reason is set to NOT_TRACKING.
      */
     inline Game();
 
@@ -30,7 +29,7 @@ public:
     * Modifies: bombs
     * Subtracts the passed value from 100 and assigns that value to bombs. Minesweeper tells you the number of bombs remaining out of 100, this gives the number actually found. If all bombs were found, won is set to true.
     */
-    inline void setBombs(const int &bombs);
+    inline void setBombs();
 
     /*
     * Set time
@@ -38,7 +37,15 @@ public:
     * Modifies: time
     * Sets time (taken to complete the game) to the specified value.
     */
-    inline void setTime(const int &time);
+    inline void setTime();
+
+    /*
+    * Set time
+    * Requires: One reason
+    * Modifies: reason
+    * Sets reason for losing the game
+    */
+    inline void setReason();
 
     /*
      * Get month
