@@ -1,9 +1,6 @@
 #include "game.h"
-
 #include <thread>
-
 #include "iostream"
-
 using namespace std;
 
 Game::Game() {
@@ -11,8 +8,17 @@ Game::Game() {
     year = 0;
     bombs = 0;
     time = 0;
-    reason = reasons::NOT_TRACKING;
+    reason = Reasons::NOT_TRACKING;
     won = false;
+}
+
+Game::Game(const int &month, const int &year, const int &bombs, const int &time, const int &reason, const int &won) {
+    this->month = month;
+    this->year = year;
+    this->bombs = bombs;
+    this->time = time;
+    this->reason = static_cast<Reasons>(reason);
+    this->won = static_cast<bool>(won);
 }
 
 void Game::setDate(const int &month, const int &year) {
@@ -31,7 +37,10 @@ void Game::setBombs() {
         cout << "Invalid input, please choose an integer between 0 and 100: ";
     }
     bombs = 100 - chosen_bombs;
-    if (bombs == 100) won = true;
+    if (bombs == 100) {
+        won = true;
+        reason = Reasons::NOT_TRACKING;
+    }
     cout << chosen_bombs << " bomb(s) remaining. " << bombs << " bomb(s) cleared." << endl;
     if (won) cout << "Congrats on your win!" << endl;
     this_thread::sleep_for(chrono::milliseconds(600));
@@ -71,27 +80,27 @@ void Game::setReason() {
     }
     switch (chosen_reason) {
         case 0:
-            reason = reasons::NOT_TRACKING;
+            reason = Reasons::NOT_TRACKING;
             cout << "Chosen reason: Not Tracking" << endl;
             this_thread::sleep_for(chrono::milliseconds(600));
             break;
         case 1:
-            reason = reasons::LOGIC;
+            reason = Reasons::LOGIC;
             cout << "Chosen reason: Logic Error" << endl;
             this_thread::sleep_for(chrono::milliseconds(600));
             break;
         case 2:
-            reason = reasons::MISCLICK;
+            reason = Reasons::MISCLICK;
             cout << "Chosen reason: Misclick" << endl;
             this_thread::sleep_for(chrono::milliseconds(600));
             break;
         case 3:
-            reason = reasons::MISCOUNT;
+            reason = Reasons::MISCOUNT;
             cout << "Chosen reason: Miscounted Bombs" << endl;
             this_thread::sleep_for(chrono::milliseconds(600));
             break;
         case 4:
-            reason = reasons::CHANCE;
+            reason = Reasons::CHANCE;
             cout << "Chosen reason: Chance" << endl;
             this_thread::sleep_for(chrono::milliseconds(600));
             break;
@@ -116,15 +125,15 @@ int Game::getTime() const {
 
 int Game::getReason() const {
     switch (reason) {
-        case reasons::NOT_TRACKING:
+        case Reasons::NOT_TRACKING:
             return 0;
-        case reasons::LOGIC:
+        case Reasons::LOGIC:
             return 1;
-        case reasons::MISCLICK:
+        case Reasons::MISCLICK:
             return 2;
-        case reasons::MISCOUNT:
+        case Reasons::MISCOUNT:
             return 3;
-        case reasons::CHANCE:
+        case Reasons::CHANCE:
             return 4;
     }
 }

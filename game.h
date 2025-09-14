@@ -5,7 +5,7 @@ class Game {
 private:
     int month, year, bombs, time;
     bool won;
-    enum class reasons {NOT_TRACKING, LOGIC, MISCLICK, MISCOUNT, CHANCE} reason;
+    enum class Reasons {NOT_TRACKING, LOGIC, MISCLICK, MISCOUNT, CHANCE} reason;
 public:
     /*
      * Default Constructor
@@ -14,6 +14,8 @@ public:
      * Creates a new game where all integer variables are set to 0, won is set to false, and reason is set to NOT_TRACKING.
      */
     inline Game();
+
+    inline Game(const int &month, const int &year, const int &bombs, const int &time, const int &reason, const int &won);
 
     /*
     * Set time
@@ -96,27 +98,66 @@ public:
     inline bool getWon() const;
 
     friend bool operator < (const Game &g1, const Game &g2) {
-        return g1.getTime() < g2.getTime();
+        bool less = false;
+        if (g1.getTime() > g2.getTime()) {
+            if (g1.getBombs() <= g2.getBombs()) {
+                less = true;
+            }
+        }
+        else if (g1.getBombs() < g2.getBombs()) {
+            if (g1.getTime() >= g2.getTime()) {
+                less = true;
+            }
+        }
+        return less;
     }
 
     friend bool operator > (const Game &g1, const Game &g2) {
-        return g1.getTime() > g2.getTime();
+        bool greater = false;
+        if (g1.getTime() < g2.getTime()) {
+            if (g1.getBombs() >= g2.getBombs()) {
+                greater = true;
+            }
+        }
+        else if (g1.getBombs() > g2.getBombs()) {
+            if (g1.getTime() <= g2.getTime()) {
+                greater = true;
+            }
+        }
+        return greater;
     }
 
     friend bool operator == (const Game &g1, const Game &g2) {
-        return g1.getTime() == g2.getTime();
+        return (g1.getTime() == g2.getTime() && g1.getBombs() != g2.getBombs());
     }
 
     friend bool operator != (const Game &g1, const Game &g2) {
-        return g1.getTime() != g2.getTime();
+        return (g1.getTime() != g2.getTime() || g1.getBombs() != g2.getBombs());
     }
 
     friend bool operator <= (const Game &g1, const Game &g2) {
-        return g1.getTime() <= g2.getTime();
+        bool less = false;
+        if (g1.getBombs() == g2.getBombs()) {
+            if (g1.getTime() <= g2.getTime()) {
+                less = false;
+            }
+        }
+        else if (g1.getBombs() <= g2.getBombs()) less = true;
+        return less;
     }
 
     friend bool operator >= (const Game &g1, const Game &g2) {
-        return g1.getTime() >= g2.getTime();
+        bool greater = false;
+        if (g1.getBombs() == g2.getBombs()) {
+            if (g1.getTime() > g2.getTime()) greater = false;
+            if (g1.getTime() < g2.getTime()) greater = true;
+        }
+        if (g1.getTime() == g2.getTime()) {
+            if (g1.getBombs() > g2.getBombs()) greater = true;
+            if (g1.getBombs() < g2.getBombs()) greater = false;
+        }
+        else if (g1.getBombs() >= g2.getBombs()) greater = true;
+        return greater;
     }
 };
 
