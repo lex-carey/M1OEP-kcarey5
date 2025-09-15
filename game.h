@@ -15,21 +15,27 @@ public:
      */
     inline Game();
 
+    /*
+     * Overloaded Constructor
+     * Requires: Six integers
+     * Modifies: month, year, bombs, time, reason, won
+     * Creates a new game using the values passed into the function. The integer values for reason and won are static cast onto the variables.
+     */
     inline Game(const int &month, const int &year, const int &bombs, const int &time, const int &reason, const int &won);
 
     /*
     * Set time
     * Requires: Two integers
     * Modifies: month, year
-    * Sets the date to the specified month and year
+    * Sets the date to the specified month and year.
     */
     inline void setDate(const  int &month, const  int &year);
 
     /*
     * Set bombs
-    * Requires: One integer
-    * Modifies: bombs
-    * Subtracts the passed value from 100 and assigns that value to bombs. Minesweeper tells you the number of bombs remaining out of 100, this gives the number actually found. If all bombs were found, won is set to true.
+    * Requires: Nothing
+    * Modifies: bombs, sometimes won and reason.
+    * Prompts user for number of bombs remaining when game ended. That value is then subtracted from 100 and the resulting is assigned to bombs. If all bombs were found, won is set to true and reason is set to NOT_TRACKING.
     */
     inline void setBombs();
 
@@ -37,15 +43,15 @@ public:
     * Set time
     * Requires: One integer
     * Modifies: time
-    * Sets time (taken to complete the game) to the specified value.
+    * Prompts user for the amount of time (seconds) the game lasted and sets time to the specified value.
     */
     inline void setTime();
 
     /*
-    * Set time
-    * Requires: One reason
+    * Set reason
+    * Requires: Nothing
     * Modifies: reason
-    * Sets reason for losing the game
+    * Prompts user for the reason the game was lost (from a list of options) and sets reason to the specified choice.
     */
     inline void setReason();
 
@@ -53,7 +59,7 @@ public:
      * Get month
      * Requires: Nothing
      * Modifies: Nothing
-     * Returns the month the game was played (0-11).
+     * Returns the month the game was played (1-12).
      */
     inline int getMonth() const;
 
@@ -61,7 +67,7 @@ public:
      * Get year
      * Requires: Nothing
      * Modifies: Nothing
-     * Returns the year the game was played (number of years since 1900).
+     * Returns the year the game was played.
      */
     inline int getYear() const;
 
@@ -85,7 +91,7 @@ public:
      * Get reason
      * Requires: Nothing
      * Modifies: Nothing
-     * Returns the reason the game was lost, or 'Won' if the game was won.
+     * Returns the reason the game was lost and NOT_TRACKING if the game was won or if the user chose not to track this.
      */
     inline int getReason() const;
 

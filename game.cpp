@@ -27,6 +27,7 @@ void Game::setDate(const int &month, const int &year) {
 }
 
 void Game::setBombs() {
+    //every Minesweeper map contains 100 bombs
     cout << "How many bombs were remaining? (Pick an integer between 0 and 100): ";
     int chosen_bombs;
     while (!(cin >> chosen_bombs) || 100 < chosen_bombs || chosen_bombs < 0)
@@ -37,6 +38,7 @@ void Game::setBombs() {
         cout << "Invalid input, please choose an integer between 0 and 100: ";
     }
     bombs = 100 - chosen_bombs;
+    //if all bombs were cleared won is true and reason is set to NOT_TRACKING
     if (bombs == 100) {
         won = true;
         reason = Reasons::NOT_TRACKING;
@@ -47,6 +49,7 @@ void Game::setBombs() {
 }
 
 void Game::setTime() {
+    //999 seconds is the maximum tracked time on Minesweeper
     cout << "How long (in seconds) did the game take? (Please pick an integer between 0 and 999): ";
     int chosen_time;
     while (!(cin >> chosen_time) || 999 < chosen_time || chosen_time < 0)
@@ -62,6 +65,8 @@ void Game::setTime() {
 }
 
 void Game::setReason() {
+    //these are the all reasons I've found that I've lost games before so this is what I included
+    //numbers correspond to enum's int values
     cout << "Why did you lose the game?" << endl <<
             "0 = Not Tracking Loss Reasons" << endl <<
             "1 = Logic Error" << endl <<
@@ -78,6 +83,7 @@ void Game::setReason() {
         cout << "Invalid input, please choose an integer between 0 and 4." << endl <<
                 "Reason: " << endl;
     }
+    //setting reason
     switch (chosen_reason) {
         case 0:
             reason = Reasons::NOT_TRACKING;
